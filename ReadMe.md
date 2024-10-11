@@ -149,19 +149,46 @@ def run(ctx):
 
 ### Building
 
-You will need [just](https://github.com/casey/just) installed, which can be done with `cargo install just`.
+##### Windows
 
-Download the after effects sdk for your desired platform and point to it with the `AESDK_ROOT` environment variable. You may also need an appropriate version of MSVC with Clang 16.0 + installed on windows, and development tools with a signing certificate set up on MacOs.
+**Recommended**: Use Busybox as your shell.
 
-On MacOs and Windows you can build with the following command from the root directory of this repo.
+| Type | Windows 64 bit | Windows 32 bit | History |
+|------|----------------|----------------|---------|
+| Stable | [Stable 64 bit](https://frippery.org/files/busybox/busybox64.exe) | [Stable 32 bit](https://frippery.org/files/busybox/busybox.exe) | [Browse](https://frippery.org/files/busybox/?C=M;O=D) |
+| Pre-Release | [Pre-Release 64 bit](https://frippery.org/files/busybox/prerelease/busybox_pre64.exe) | [Pre-Release 32 bit](https://frippery.org/files/busybox/prerelease/busybox_pre.exe) | [Browse](https://frippery.org/files/busybox/prerelease/?C=M;O=D) |
+
+Usually the pre-release 64-bit binary is the one you want. Then save it as `C:/Windows/sh.exe`, and set it up with `C:/Windows/sh.exe -ilX` as the command in Windows Terminal.
+
+Then, install **Chocolatey**. These are prerequisites:
+
+```shell
+# must be separate
+choco install -y gsudo
+choco install -y visualstudio2022buildtools
+# includes clang + msvc
+choco install -y visualstudio2022-workload-vctools --package-parameters "--add Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset --add Microsoft.VisualStudio.Component.VC.Llvm.Clang"
+choco install -y rustup.install
+# verify
+rustc --version
+cargo --version
+# include standard library
+rustup component add rust-src
+# rust build tool "just"
+cargo install just
+```
+
+##### Debugging
+
+On macOS and Windows you can build with the following command from the root directory of this repo.
 
 ```bash
 just -f golob_plugin/Justfile build
 ```
 
-Debug builds will link the system python, they will respect the current venv and will be functional so long as numpy is installed.
+Debug builds will link the system python, they will respect the current `venv` and will be functional so long as `numpy` is installed.
 
-You can build a self contained release with
+You can build a self-contained release with
 
 ```Bash
 just -f golob_plugin/Justgile release
@@ -173,9 +200,9 @@ just -f golob_plugin/Justgile release
 - Automatically detect venv / sites package if relative to the project file.
 - Structured json output - much like sequential mode allow the insertion of JSON layers so your scripts can create keyframes from image analysis.
 - Shape layers / paths inputs.
-- Gpu buffer mode, Use something like cupy to let users specify they are a zero copy gpu effect.
-- Layer time offsets - Allow for specifying multiple samples of images from the same layer, but at different times.
-- Tracking point api.
+- GPU buffer mode, Use something like `cupy` to let users specify they are a zero copy gpu effect.
+- Layer time offsets to allow for specifying multiple samples of images from the same layer, but at different times.
+- Tracking point API.
 
 
 

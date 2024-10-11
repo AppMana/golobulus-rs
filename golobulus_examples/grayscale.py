@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def setup(ctx):
     import sys
 

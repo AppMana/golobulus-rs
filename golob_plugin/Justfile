@@ -3,8 +3,8 @@ PluginName       := "Golobulus"
 BundleIdentifier := "com.adobe.AfterEffects.{{Golobulus}}"
 BinaryName       := "golob_plugin" 
 CrateName        := "golob_plugin" 
-PyMajor          := "3.12"
-PyMinor          := ".3"
+PyMajor          := "3.11"
+PyMinor          := ".7"
 PyVer            := PyMajor + PyMinor
 NumpyVersion     := "1.26.4"
 BundlePyPath     := "Contents/Resources/Python"
@@ -15,8 +15,9 @@ win_triple   := arch() + "-pc-windows-msvc"
 macos_standalone_url := "https://github.com/indygreg/python-build-standalone/releases/download/20240415/cpython-"+PyVer+"+20240415-"+macos_triple+"-pgo+lto-full.tar.zst"
 win_standalone_url   := "https://github.com/indygreg/python-build-standalone/releases/download/20240415/cpython-"+PyVer+"+20240415-"+win_triple+"-pgo-full.tar.zst"
 TargetDir            := env_var_or_default("CARGO_TARGET_DIR", "../target")
-export AESDK_ROOT    := if env("AESDK_ROOT", "") == "" { justfile_directory() / "../../sdk/AfterEffectsSDK" } else { env_var("AESDK_ROOT") }
-export PRSDK_ROOT    := if env("PRSDK_ROOT", "") == "" { justfile_directory() / "../../sdk/Premiere Pro 22.0 C++ SDK" } else { env_var("PRSDK_ROOT") }
+export AESDK_ROOT    := if env("AESDK_ROOT", "") == "" { justfile_directory() / "../sdk/AfterEffectsSDK" } else { env_var("AESDK_ROOT") }
+export PRSDK_ROOT    := if env("PRSDK_ROOT", "") == "" { justfile_directory() / "../sdk/Premiere Pro 22.0 C++ SDK" } else { env_var("PRSDK_ROOT") }
+export LIBCLANG_PATH := if env("LIBCLANG_PATH", "") == "" { "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/Llvm/x64/bin" } else { env_var("LIBCLANG_PATH") }
 
 set windows-shell := ["powershell.exe", "-NoLogo", "-Command"]
 

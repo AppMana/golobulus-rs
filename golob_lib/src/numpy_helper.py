@@ -3,7 +3,7 @@ def center_crop(image, crop_height, crop_width):
     start_y = (h - crop_height) // 2
     start_x = (w - crop_width) // 2
 
-    return image[start_y : start_y + crop_height, start_x : start_x + crop_width, :]
+    return image[start_y: start_y + crop_height, start_x: start_x + crop_width, :]
 
 
 def rgba_view(arr):
